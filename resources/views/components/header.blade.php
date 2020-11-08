@@ -1,15 +1,16 @@
 <header class="header-area">
-    {{ categories[0] }}
+
     <!-- Navbar Area -->
     <div class="nikki-main-menu">
+
         <div class="classy-nav-container breakpoint-off">
             <div class="container-fluid">
                 <!-- Menu -->
                 <nav class="classy-navbar justify-content-between" id="nikkiNav">
 
                     <!-- Nav brand -->
-                    <a href="index.html" class="nav-brand"><img src="img/core-img/logo.png" alt=""></a>
-
+{{--                    <a href="index.html" class="nav-brand"><img src="img/core-img/logo.png" alt=""></a>--}}
+                    <h3>News Blog</h3>
                     <!-- Navbar Toggler -->
                     <div class="classy-navbar-toggler">
                         <span class="navbarToggler"><span></span><span></span><span></span></span>
@@ -34,24 +35,25 @@
                                         <li><a href="single-post.html">Single Post</a></li>
                                         <li><a href="about-us.html">About</a></li>
                                         <li><a href="contact.html">Contact</a></li>
-                                        <li><a href="typography.html">Typography</a></li>
                                     </ul>
                                 </li>
-                                <li><a href="#">Catagories</a>
-                                    <div class="megamenu">
+                                <li><a href="#">Categories</a>
+                                    <div class="dropdown">
                                         <ul class="single-mega cn-col-4">
-                                            <li><a href="#">- Features</a></li>
-                                            <li><a href="#">- Food</a></li>
-                                            <li><a href="#">- Travel</a></li>
-                                            <li><a href="#">- Recipe</a></li>
-                                            <li><a href="#">- Bread</a></li>
-                                            <li><a href="#">- Breakfast</a></li>
-                                            <li><a href="#">- Meat</a></li>
+                                            @foreach($categories as $category)
+                                                <li>
+                                                    <a href="{{ route('categories', ['id' => $category->id]) }}">
+                                                        {{ $category->name }}
+                                                    </a>
+                                                </li>
+                                            @endforeach
                                         </ul>
                                     </div>
                                 </li>
                                 <li><a href="about-us.html">About</a></li>
                                 <li><a href="contact.html">Contact</a></li>
+                                <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
+                                <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
                             </ul>
 
                             <!-- Search Form -->

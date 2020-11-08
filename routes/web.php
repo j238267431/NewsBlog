@@ -19,6 +19,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/categories', [App\Http\Controllers\Categories\CategoriesController::class, 'index'])
     ->name('categories');
+Route::get('/categories/{id}', [\App\Http\Controllers\Categories\CategoriesController::class, 'show'])
+    ->name('categories.show');
+Route::resource('/form/feedback', App\Http\Controllers\Feedback\FeedbackController::class);
+Route::resource('/form/request', App\Http\Controllers\ReqController::class);
 
 Auth::routes();
 
