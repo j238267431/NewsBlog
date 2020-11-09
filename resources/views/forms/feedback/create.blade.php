@@ -1,6 +1,12 @@
 @extends('layouts.main')
 @section('content')
+
     <div class = "col-8 offset-2">
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @elseif(session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
         <h3>Feedback form</h3>
         <form action="{{ route('feedback.store') }}" method="POST">
             @csrf

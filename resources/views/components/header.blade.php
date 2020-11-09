@@ -50,8 +50,8 @@
                                         </ul>
                                     </div>
                                 </li>
-                                <li><a href="about-us.html">About</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a href="{{ route('feedback.create') }}">Feedback</a></li>
+                                <li><a href="{{ route('request.create') }}">Request</a></li>
                                 <li><a href="{{ route('register') }}">{{ __('Register') }}</a></li>
                                 <li><a href="{{ route('login') }}">{{ __('Login') }}</a></li>
                             </ul>

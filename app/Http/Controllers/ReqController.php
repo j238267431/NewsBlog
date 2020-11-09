@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Req;
+use App\Models\Categories;
+//use App\Models\Request;
 use Illuminate\Http\Request;
+use App\Models\Req;
 
 class ReqController extends Controller
 {
@@ -24,7 +26,8 @@ class ReqController extends Controller
      */
     public function create()
     {
-        return view('forms.request.create', ['categories' => $this->categoryList]);
+        $categories = Categories::all();
+        return view('forms.request.create', ['categories' => $categories]);
     }
 
     /**
@@ -36,28 +39,38 @@ class ReqController extends Controller
     public function store(Request $request)
     {
 
-        $data = $request->only(['name', 'phone', 'email', 'request']);
-        $saveFile = function(array $data) {
-            $responseData = [];
-            $fileNews = storage_path('app/news.txt');
-            if(file_exists($fileNews)) {
-                $file = file_get_contents($fileNews);
-                $response = json_decode($file, true);
-            }
+        $data = $request->only('name', 'phone', 'email', 'request');
+//        dd($data);
+        $create = Req::create($data);
+        if($create){
+            return back()->with('success', 'request succesfully added');
+        }
+        return back()->with('error', 'request did not added');
 
 
-            $responseData[] = $data;
-            if(isset($response) && !empty($response)) {
-                $r = array_merge($response, $responseData);
-            }else {
-                $r = $responseData;
-            }
-            file_put_contents($fileNews, json_encode($r));
-        };
 
-        $saveFile($data);
-
-        return redirect()->route('request.create')->with('message', 'the request successfully added');
+//        $data = $request->only(['name', 'phone', 'email', 'request']);
+//        $saveFile = function(array $data) {
+//            $responseData = [];
+//            $fileNews = storage_path('app/news.txt');
+//            if(file_exists($fileNews)) {
+//                $file = file_get_contents($fileNews);
+//                $response = json_decode($file, true);
+//            }
+//
+//
+//            $responseData[] = $data;
+//            if(isset($response) && !empty($response)) {
+//                $r = array_merge($response, $responseData);
+//            }else {
+//                $r = $responseData;
+//            }
+//            file_put_contents($fileNews, json_encode($r));
+//        };
+//
+//        $saveFile($data);
+//
+//        return redirect()->route('request.create')->with('message', 'the request successfully added');
     }
 
     /**

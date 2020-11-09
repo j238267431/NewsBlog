@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Feedback;
 
 use App\Http\Controllers\Controller;
+use App\Models\Categories;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,7 @@ class FeedbackController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -25,7 +26,8 @@ class FeedbackController extends Controller
      */
     public function create()
     {
-        return view('forms.feedback.create', ['categories' => $this->categoryList]);
+        $categories = Categories::all();
+        return view('forms.feedback.create', ['categories' => $categories]);
     }
 
     /**
@@ -36,7 +38,14 @@ class FeedbackController extends Controller
      */
     public function store(Request $request)
     {
-//        dd($request);
+        $data = $request->only('newsId', 'name', 'feedback');
+        $data['newsId'] = 1;
+//        dd($data);
+        $create = Feedback::create($data);
+        if($create){
+            return back()->with('success', 'feedback successfully added');
+        }
+        return back()->with('error', 'feedback did not added');
     }
 
     /**

@@ -16,6 +16,7 @@ class Controller extends BaseController
     protected $categoryList;
     protected $oneNews;
 
+
     public function getCategoryList()
     {
 //        return $this->categoryList = DB::select('SELECT * FROM categories');

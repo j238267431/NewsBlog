@@ -23,6 +23,10 @@ Route::get('/categories/{id}', [\App\Http\Controllers\Categories\CategoriesContr
     ->name('categories.show');
 Route::resource('/form/feedback', App\Http\Controllers\Feedback\FeedbackController::class);
 Route::resource('/form/request', App\Http\Controllers\ReqController::class);
+Route::resources([
+    '/form/news' => App\Http\Controllers\admin\NewsController::class,
+    '/form/news/{id}' => App\Http\Controllers\admin\NewsController::class,
+]);
 
 Auth::routes();
 

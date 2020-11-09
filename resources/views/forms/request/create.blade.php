@@ -1,8 +1,12 @@
 @extends('layouts.main')
 @section('content')
-    {{ session('message') }}
     <div class = "col-8 offset-2">
-        <h3>Request to data downloading</h3>
+        @if(session('success'))
+            <div class="alert alert-success">{{ session('success') }}</div>
+        @elseif(session('error'))
+            <div class="alert alert-danger">{{ session('error') }}</div>
+        @endif
+        <h3>Request for data downloading</h3>
         <form action="{{ route('request.store') }}" method="POST">
             @csrf
             <p>Name</p>

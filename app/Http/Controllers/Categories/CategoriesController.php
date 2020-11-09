@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Categories;
 
 use App\Http\Controllers\Controller;
+use App\Models\News;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Categories;
@@ -28,18 +29,17 @@ class CategoriesController extends Controller
 //        }
 
         $categories = Categories::all();
-
-
+        $news = News::all()->take(5);
         if(isset($_GET['id'])){
+            $news = News::all()->where('categoryId', '=', $_GET['id']);
+        }
+
+
             return view('categories.categories', [
                 'categories' => $categories,
-                'titleNews' => $this->getNewsList($_GET['id']),
+                'titleNews' => $news,
             ]);
-        }
-        return view('categories.categories', [
-            'categories' => $categories,
-            'titleNews' => $this->getNewsList(),
-            ]);
+
     }
 
     public function show($id)
@@ -52,10 +52,12 @@ class CategoriesController extends Controller
 //                }
 //            }
 //        }
+        $categories = Categories::all();
+        $oneNews = News::find($id);
         return view('categories.show', [
             'id' => $id,
-            'categories' => $this->getCategoryList(),
-            'oneNews' => $this->getOneNews($id),
+            'categories' => $categories,
+            'oneNews' => $oneNews,
         ]);
     }
 }

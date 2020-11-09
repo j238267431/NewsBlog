@@ -30,7 +30,7 @@
 
                             <div class="text-center mb-50">
                                 <p class="post-date">MAY 01, 2018 / lifestyle</p>
-                                <h2 class="post-title">{{ $oneNews[0]->title }}</h2>
+                                <h2 class="post-title">{{ $oneNews->title }}</h2>
                                 <!-- Post Meta -->
                                 <div class="post-meta">
                                     <a href="#"><span>by</span> Colorlib</a>
@@ -55,7 +55,7 @@
                                     <a href="#" class="pin"><i class="fa fa-thumb-tack" aria-hidden="true"></i></a>
                                 </div>
 
-                                <p>{{ $oneNews[0]->description }}</p>
+                                <p>{{ $oneNews->description }}</p>
 
                                 <p>Dals or lentils are packed with proteins and especially in a vegetarian diet, lentils are the main source of protein. It is amazing how this humble yellow moong dal can be made into so many recipes from a plain dal khichdi to mangodi ki sabzi to the traditional Indian desserts like moong dal halwa. Fresh dill should be added only at the end of cooking, much like fresh coriander leaves. They don’t really need to cook and cooking for a long time actually reduces their flavour and aroma.</p>
 
