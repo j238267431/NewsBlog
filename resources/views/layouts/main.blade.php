@@ -105,7 +105,6 @@
 <script src="{{asset('js/plugins/plugins.js')}}"></script>
 <!-- Active js -->
 <script src="{{asset('js/active.js')}}"></script>
+@stack('js')
 </body>
-
-
 </html>
