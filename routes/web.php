@@ -13,21 +13,48 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
+Auth::routes();
 
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/categories', [App\Http\Controllers\Categories\CategoriesController::class, 'index'])
     ->name('categories');
 Route::get('/categories/{id}', [\App\Http\Controllers\Categories\CategoriesController::class, 'show'])
     ->name('categories.show');
-Route::resource('/form/feedback', App\Http\Controllers\Feedback\FeedbackController::class);
-Route::resource('/form/request', App\Http\Controllers\ReqController::class);
 Route::resources([
-    '/form/news' => App\Http\Controllers\admin\NewsController::class,
-    '/form/news/{id}' => App\Http\Controllers\admin\NewsController::class,
+    '/form/feedback' => App\Http\Controllers\Feedback\FeedbackController::class,
+    '/form/request' => App\Http\Controllers\ReqController::class
 ]);
+Route::middleware('auth')->group(function(){
+    Route::prefix('account')->group(function(){
+        route::get('/', [App\Http\Controllers\Account\IndexController::class, 'index'])
+        ->name('account');
+    });
+    Route::prefix('admin')->middleware('admin')->group(function(){
+        Route::resources([
+            '/users' => App\Http\Controllers\admin\UsersController::class,
+            '/news' => App\Http\Controllers\admin\NewsController::class,
+            '/users/{id}' => App\Http\Controllers\admin\UsersController::class,
+            '/news/{id}' => App\Http\Controllers\admin\NewsController::class,
+        ]);
+    });
+});
 
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+//Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
+//    Route::resources([
+//        '/users' => App\Http\Controllers\admin\UsersController::class,
+//        '/news' => App\Http\Controllers\admin\NewsController::class,
+//        '/users/{id}' => App\Http\Controllers\admin\UsersController::class,
+//        '/news/{id}' => App\Http\Controllers\admin\NewsController::class,
+//    ]);
+//});
+
+
+
+
+
+
+
+
+
+
