@@ -13,21 +13,35 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/', function () {
-//    return view('welcome');
-//});
-
+Auth::routes();
+Route::group(['middleware' => 'guest'], function(){
+    Route::get('/login/vk', [\App\Http\Controllers\Socialite\VKSocialiteController::class, 'redirectToProvider'])
+        ->name('vk.login');
+    Route::get('/login/vk/callback', [
+        \App\Http\Controllers\Socialite\VKSocialiteController::class, 'handleProviderCallback'
+    ])->name('vk.login.callback');
+});
+Route::get('/parser', [App\Http\Controllers\PareserController::class, 'index']);
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/categories', [App\Http\Controllers\Categories\CategoriesController::class, 'index'])
     ->name('categories');
 Route::get('/categories/{id}', [\App\Http\Controllers\Categories\CategoriesController::class, 'show'])
     ->name('categories.show');
-Route::resource('/form/feedback', App\Http\Controllers\Feedback\FeedbackController::class);
-Route::resource('/form/request', App\Http\Controllers\ReqController::class);
 Route::resources([
-    '/form/news' => App\Http\Controllers\admin\NewsController::class,
-    '/form/news/{id}' => App\Http\Controllers\admin\NewsController::class,
+    '/form/feedback' => App\Http\Controllers\Feedback\FeedbackController::class,
+    '/form/request' => App\Http\Controllers\ReqController::class
 ]);
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::middleware('auth')->group(function(){
+    Route::prefix('account')->group(function(){
+        route::get('/', [App\Http\Controllers\Account\IndexController::class, 'index'])
+        ->name('account');
+    });
+    Route::prefix('admin')->middleware('admin')->group(function(){
+        Route::resources([
+            '/users' => App\Http\Controllers\admin\UsersController::class,
+            '/news' => App\Http\Controllers\admin\NewsController::class,
+            '/users/{id}' => App\Http\Controllers\admin\UsersController::class,
+            '/news/{id}' => App\Http\Controllers\admin\NewsController::class,
+        ]);
+    });
+});
