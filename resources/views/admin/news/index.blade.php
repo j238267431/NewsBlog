@@ -34,14 +34,14 @@
                 const button = document.querySelectorAll('.delete');
                 button.forEach(el => (
                     el.addEventListener('click', function(){
-                        fetchData("{{ url('/form/news') }}/" + this.getAttribute('rel'), {
+                        fetchData("{{ url('/admin/news') }}/" + this.getAttribute('rel'), {
                             method: "DELETE",
                             headers: {
                                 'Content-type': 'application/json; charset=utf-8',
                                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
                             }
                         }).then((data)=>{
-                            document.location.href = '/form/news'
+                            document.location.href = '/admin/news'
                         })
 
                     })

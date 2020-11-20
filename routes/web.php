@@ -14,7 +14,14 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
-
+Route::group(['middleware' => 'guest'], function(){
+    Route::get('/login/vk', [\App\Http\Controllers\Socialite\VKSocialiteController::class, 'redirectToProvider'])
+        ->name('vk.login');
+    Route::get('/login/vk/callback', [
+        \App\Http\Controllers\Socialite\VKSocialiteController::class, 'handleProviderCallback'
+    ])->name('vk.login.callback');
+});
+Route::get('/parser', [App\Http\Controllers\PareserController::class, 'index']);
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/categories', [App\Http\Controllers\Categories\CategoriesController::class, 'index'])
     ->name('categories');
@@ -38,23 +45,3 @@ Route::middleware('auth')->group(function(){
         ]);
     });
 });
-
-
-//Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function(){
-//    Route::resources([
-//        '/users' => App\Http\Controllers\admin\UsersController::class,
-//        '/news' => App\Http\Controllers\admin\NewsController::class,
-//        '/users/{id}' => App\Http\Controllers\admin\UsersController::class,
-//        '/news/{id}' => App\Http\Controllers\admin\NewsController::class,
-//    ]);
-//});
-
-
-
-
-
-
-
-
-
-
