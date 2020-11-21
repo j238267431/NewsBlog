@@ -38,10 +38,10 @@ Route::middleware('auth')->group(function(){
     });
     Route::prefix('admin')->middleware('admin')->group(function(){
         Route::resources([
-            '/users' => App\Http\Controllers\admin\UsersController::class,
-            '/news' => App\Http\Controllers\admin\NewsController::class,
-            '/users/{id}' => App\Http\Controllers\admin\UsersController::class,
-            '/news/{id}' => App\Http\Controllers\admin\NewsController::class,
+            '/users' => App\Http\Controllers\Admin\UsersController::class,
+            '/news' => App\Http\Controllers\Admin\NewsController::class,
+            '/users/{id}' => App\Http\Controllers\Admin\UsersController::class,
+            '/news/{id}' => App\Http\Controllers\Admin\NewsController::class,
         ]);
     });
 });
