@@ -27,6 +27,7 @@ class NewsCreate extends FormRequest
             'title' => 'required|string',
             'categoryId' => 'required|integer',
             'resourceId' => 'required|integer',
+            'image' => 'sometimes',
             'description' => 'required|string'
         ];
     }

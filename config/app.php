@@ -164,6 +164,7 @@ return [
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Orchestra\Parser\XmlServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
