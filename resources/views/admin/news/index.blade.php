@@ -34,8 +34,6 @@
                 const body = await response;
                 return body;
             }
-            console.log(1)
-
                 const button = document.querySelectorAll('.delete');
                 button.forEach(el => (
                     el.addEventListener('click', function(){

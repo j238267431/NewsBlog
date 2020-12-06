@@ -20,7 +20,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'is_admin'
+        'is_admin',
+        'id_profile'
     ];
 
     /**
@@ -45,5 +46,9 @@ class User extends Authenticatable
     public function saveSocialUser(array $data)
     {
         return $this->fill($data)->save();
+    }
+    public function profiles()
+    {
+        return $this->hasOne('App\Models\UsersProfiles', 'id', 'id_profile');
     }
 }

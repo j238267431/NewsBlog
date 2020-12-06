@@ -7,8 +7,9 @@
                 <div class="col-12">
                     <nav aria-label="breadcrumb">
                         <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="{{ route('categories') }}"><i class="fa fa-home"></i> Домой</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">{{ $slug }}</li>
+                            <li class="breadcrumb-item"><a href="{{route('categories')}}"><i class="fa fa-home"></i>Домой</a></li>
+                            <li class="breadcrumb-item"><a href="{{ route('categories.show', $slug) }}">{{ $slug }}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">Новость</li>
                         </ol>
                     </nav>
                 </div>
@@ -26,8 +27,10 @@
                     <!-- Post Details Area -->
                     <div class="single-post-details-area">
                         <div class="post-content">
+
                             <div class="text-center mb-50">
-                                <h2 class="post-title">{{ $oneCategory->name }}</h2>
+                                <p class="post-date"> {{ $oneNews->pubDate }}</p>
+                                <h2 class="post-title">{{ $oneNews->title }}</h2>
                                 <!-- Post Meta -->
                                 <div class="post-meta">
                                     <a href="#"><span>by</span> Colorlib</a>
@@ -52,55 +55,18 @@
                                     <a href="#" class="pin"><i class="fa fa-thumb-tack" aria-hidden="true"></i></a>
                                 </div>
 
-{{--                                +"title": "Роскосмос модернизировал систему связи с МКС"--}}
-{{--                                +"link": "https://yandex.ru/news/story/Roskosmos_moderniziroval_sistemu_svyazi_s_MKS--e13ea7de504cf48b6eb9d249e9bf3079?lang=ru&from=rss&wan=1&stid=sBRDG1NiEUYGZkxV"--}}
-{{--                                +"guid": "https://yandex.ru/news/story/Roskosmos_moderniziroval_sistemu_svyazi_s_MKS--e13ea7de504cf48b6eb9d249e9bf3079?lang=ru&from=rss&wan=1&stid=sBRDG1NiEUYGZkxV"--}}
-{{--                                +"description": "Модернизацию системы связи, позволяющую обеспечить более доступной связью российских космонавтов на борту МКС, провела дочерняя компания Роскосмоса «Российские  ▶"--}}
-{{--                                +"image": null--}}
-{{--                                +"pubDate": "25 Nov 2020 18:41:14 +0000"--}}
-                        <div class="col-12 col-lg-12">
-                            <div class="blog-posts-area">
-                                <div class="row">
-
-                                @forelse($news as $oneNews )
-                                    <div class="col-12 col-sm-6">
-                                        <div class="single-blog-post mb-50">
-                                            <!-- Thumbnail -->
-                                            <div class="post-thumbnail">
-                                                <a href="{{ route('categories.show.news', [
-                                                        'slug'=>$oneNews->slug,
-                                                        'id' => $oneNews->id
-                                                        ])
-                                                    }}">
-                                                    <img src="{{asset('img/blog-img/'.$oneNews->id.'.jpg')}}" alt="">
-                                                </a>
-                                            </div>
-                                            <!-- Content -->
-                                            <div class="post-content">
-                                                <p class="post-date">{{ $oneNews->pubDate }} / life</p>
-                                                <a href="{{ route('categories.show.news', ['slug'=>$oneNews->slug,'id' => $oneNews->id]) }}" class="post-title">
-                                                    <h4>{{ $oneNews->title }}</h4>
-                                                </a>
-{{--                                                <p class="post-excerpt">{{ $news->description }}.</p>--}}
-                                            </div>
+                                <div class="col-12 col-sm-12">
+                                    <div class="single-blog-post mb-50">
+                                        <!-- Thumbnail -->
+                                        <div class="post-thumbnail">
+                                                <img src="{{asset('img/blog-img/'.$id.'.jpg')}}" alt="">
+                                        </div>
+                                        <!-- Content -->
+                                        <div class="post-content">
+                                            <p class="post-excerpt">{{ $oneNews->description }}.</p>
                                         </div>
                                     </div>
-                                @empty
-                                    'Новостей нет'
-                                @endforelse
-                                    {{$news->links()}}
                                 </div>
-                            </div>
-                        </div>
-
-{{--                                @forelse($oneCategory->news as $key => $news )--}}
-{{--                                    <p><a href="{{ route('news.show', $id = $key) }}">{{ $news->title }}</a></p>--}}
-{{--                                @empty--}}
-{{--                                    'Новостей нет'--}}
-{{--                                @endforelse--}}
-
-
-                                <p>Dals or lentils are packed with proteins and especially in a vegetarian diet, lentils are the main source of protein. It is amazing how this humble yellow moong dal can be made into so many recipes from a plain dal khichdi to mangodi ki sabzi to the traditional Indian desserts like moong dal halwa. Fresh dill should be added only at the end of cooking, much like fresh coriander leaves. They don’t really need to cook and cooking for a long time actually reduces their flavour and aroma.</p>
 
                                 <blockquote class="shortcodes">
                                     <div class="blockquote-icon">
@@ -112,7 +78,6 @@
                                     </div>
                                 </blockquote>
 
-                                <p>Dals or lentils are packed with proteins and especially in a vegetarian diet, lentils are the main source of protein. It is amazing how this humble yellow moong dal can be made into so many recipes from a plain dal khichdi to mangodi ki sabzi to the traditional Indian desserts like moong dal halwa. Fresh dill should be added only at the end of cooking, much like fresh coriander leaves. They don’t really need to cook and cooking for a long time actually reduces their flavour and aroma.</p>
 
                                 <div class="row">
                                     <div class="col-12 col-md-6">
@@ -124,17 +89,6 @@
                                 </div>
 
                                 <!-- List -->
-                                <div class="nikki-list-area mb-50">
-                                    <h4 class="mb-15">Immediate Dividends</h4>
-                                    <ul class="nikki-list">
-                                        <li>* Wash the dal in 3-4 changes of water and soak in room temperature water for 10 mins while you finish the rest of preparation.</li>
-                                        <li>* Drain and pressure cook with salt, turmeric and water for 2 whistles.</li>
-                                        <li>* Remove the cooker from heat and open only after all the steam has escaped on its own.</li>
-                                        <li>* While the dal is cooking, heat ghee in a pan. Add hing and cumin seeds.</li>
-                                        <li>* When the seeds start to crackle, add ginger, and green chillies. Sauté for a minute.</li>
-                                        <li>* Add tomatoes and a little salt. Mix well. Cook for about 5 mins with occasional stirring. Add a little water to the pan if the masala starts to stick.</li>
-                                    </ul>
-                                </div>
 
                                 <!-- Post Tags & Share -->
                                 <div class="post-tags-share">

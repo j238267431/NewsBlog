@@ -5,19 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categories extends Model
+class ParsedNews extends Model
 {
     use HasFactory;
-
-    protected $table = 'categories';
+    protected $table = 'parsedNews';
+    protected $fillable = ['title','link','guid','description','image','pubDate','slug'];
     protected $primaryKey = 'id';
-    protected $fillable = ['name'];
+//    protected $guarded =[];
     public $timestamps = false;
-
-    public function news()
-    {
-        return $this->hasMany(News::class, 'categoryId');
-    }
 }
-
-

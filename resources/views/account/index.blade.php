@@ -1,5 +1,6 @@
 @extends('layouts.main')
 @section('content')
+
     <section class="blog-content-area section-padding-100">
         <div class="container">
             <div class="row justify-content-center">
@@ -42,117 +43,26 @@
 
                             <!-- Single Blog Post -->
 
-                            @foreach($titleNews as $tNews)
-                            <div class="col-12 col-sm-6">
-                                <div class="single-blog-post mb-50">
-                                    <!-- Thumbnail -->
-                                    <div class="post-thumbnail">
-                                        <a href="{{ route('categories.show', ['slug' => $tNews->id],) }}">
-                                            <img src="{{asset('img/blog-img/'.$tNews->id.'.jpg')}}" alt="">
-                                        </a>
-                                    </div>
-                                    <!-- Content -->
-                                    <div class="post-content">
-                                        <p class="post-date">MAY 10, 2018 / life</p>
-                                        <a href="{{ route('categories.show', ['slug' => $tNews->id]) }}" class="post-title">
-                                            <h4>{{ $tNews->title }}</h4>
-                                        </a>
-                                        <p class="post-excerpt">{{ $tNews->description }}.</p>
+                                <div class="col-12 col-sm-6">
+                                    <div class="single-blog-post mb-50">
+                                        <!-- Thumbnail -->
+                                        <div class="post-thumbnail">
+                                            <a href="">
+                                                <img src="" alt="someImg">
+                                            </a>
+                                        </div>
+                                        <!-- Content -->
+                                        <div class="post-content">
+                                            <p class="post-date">MAY 10, 2018 / life</p>
+                                            <a href="" class="post-title">
+                                                <h4>{{ 'title' }}</h4>
+                                            </a>
+                                            <p class="post-excerpt">{{ 'description' }}.</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
 
-                                @endforeach
 
-{{--                            <!-- Single Blog Post -->--}}
-{{--                            <div class="col-12 col-sm-6">--}}
-{{--                                <div class="single-blog-post mb-50">--}}
-{{--                                    <!-- Thumbnail -->--}}
-{{--                                    <div class="post-thumbnail">--}}
-{{--                                        <a href="#"><img src="{{asset('img/blog-img/2.jpg')}}" alt=""></a>--}}
-{{--                                    </div>--}}
-{{--                                    <!-- Content -->--}}
-{{--                                    <div class="post-content">--}}
-{{--                                        <p class="post-date">MAY 17, 2018 / Sport</p>--}}
-{{--                                        <a href="#" class="post-title">--}}
-{{--                                            <h4>A Closer Look At Our Front Porch Items From Lowe’s</h4>--}}
-{{--                                        </a>--}}
-{{--                                        <p class="post-excerpt">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <!-- Single Blog Post -->--}}
-{{--                            <div class="col-12 col-sm-6">--}}
-{{--                                <div class="single-blog-post mb-50">--}}
-{{--                                    <!-- Thumbnail -->--}}
-{{--                                    <div class="post-thumbnail">--}}
-{{--                                        <a href="#"><img src="{{asset('img/blog-img/3.jpg')}}" alt=""></a>--}}
-{{--                                    </div>--}}
-{{--                                    <!-- Content -->--}}
-{{--                                    <div class="post-content">--}}
-{{--                                        <p class="post-date">MAY 22, 2018 / lifestyle</p>--}}
-{{--                                        <a href="#" class="post-title">--}}
-{{--                                            <h4>Wedding Guest Style: From Beach Casual to Black-Tie Formal</h4>--}}
-{{--                                        </a>--}}
-{{--                                        <p class="post-excerpt">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <!-- Single Blog Post -->--}}
-{{--                            <div class="col-12 col-sm-6">--}}
-{{--                                <div class="single-blog-post mb-50">--}}
-{{--                                    <!-- Thumbnail -->--}}
-{{--                                    <div class="post-thumbnail">--}}
-{{--                                        <a href="#"><img src="{{asset('img/blog-img/4.jpg')}}" alt=""></a>--}}
-{{--                                    </div>--}}
-{{--                                    <!-- Content -->--}}
-{{--                                    <div class="post-content">--}}
-{{--                                        <p class="post-date">MAY 25, 2018 / Fashion</p>--}}
-{{--                                        <a href="#" class="post-title">--}}
-{{--                                            <h4>5 Things to Know About Dating a Bisexual</h4>--}}
-{{--                                        </a>--}}
-{{--                                        <p class="post-excerpt">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <!-- Single Blog Post -->--}}
-{{--                            <div class="col-12 col-sm-6">--}}
-{{--                                <div class="single-blog-post mb-50">--}}
-{{--                                    <!-- Thumbnail -->--}}
-{{--                                    <div class="post-thumbnail">--}}
-{{--                                        <a href="#"><img src="{{asset('img/blog-img/5.jpg')}}" alt=""></a>--}}
-{{--                                    </div>--}}
-{{--                                    <!-- Content -->--}}
-{{--                                    <div class="post-content">--}}
-{{--                                        <p class="post-date">MAY 29, 2018 / food</p>--}}
-{{--                                        <a href="#" class="post-title">--}}
-{{--                                            <h4>7 Things Wealthy Women Do With Their Money That You Can Do Too</h4>--}}
-{{--                                        </a>--}}
-{{--                                        <p class="post-excerpt">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
-
-{{--                            <!-- Single Blog Post -->--}}
-{{--                            <div class="col-12 col-sm-6">--}}
-{{--                                <div class="single-blog-post mb-50">--}}
-{{--                                    <!-- Thumbnail -->--}}
-{{--                                    <div class="post-thumbnail">--}}
-{{--                                        <a href="#"><img src="{{asset('img/blog-img/6.jpg')}}" alt=""></a>--}}
-{{--                                    </div>--}}
-{{--                                    <!-- Content -->--}}
-{{--                                    <div class="post-content">--}}
-{{--                                        <p class="post-date">Jun 02, 2018 / SummerHoliday</p>--}}
-{{--                                        <a href="#" class="post-title">--}}
-{{--                                            <h4>The 10 Most Instagrammable Spots in San Diego</h4>--}}
-{{--                                        </a>--}}
-{{--                                        <p class="post-excerpt">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>--}}
-{{--                                    </div>--}}
-{{--                                </div>--}}
-{{--                            </div>--}}
 
                         </div>
                     </div>
@@ -172,7 +82,7 @@
                         <div class="single-widget-area mb-30">
                             <!-- Title -->
                             <div class="widget-title">
-                                <h6>About Me</h6>
+                                <h6>{{ $user->name }}</h6>
                             </div>
                             <!-- Thumbnail -->
                             <div class="about-thumbnail">
@@ -189,7 +99,11 @@
                         <div class="single-widget-area mb-30">
                             <!-- Title -->
                             <div class="widget-title">
-                                <h6>Subscribe &amp; Follow</h6>
+                                @if($idProfileIsSet)
+                                    <h6><a href="{{ route('profile.edit', $user->id_profile ) }}">edit profile</a></h6>
+                                @else
+                                    <h6><a href="{{ route('profile.create') }}">create profile</a></h6>
+                                @endif
                             </div>
                             <!-- Widget Social Info -->
                             <div class="widget-social-info text-center">
