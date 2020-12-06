@@ -23,7 +23,16 @@ class NewsController extends Controller
     {
         $categories = Categories::all();
         $news = News::orderBy('id', 'desc')->paginate(4);
-        return view ('admin.news.index', ['news' => $news, 'categories' => $categories ]);
+        $parsedNews = \Storage::disk('local')->files('/https:/news.yandex.ru');
+        foreach($parsedNews as $pNews){
+            $newsPath = \Storage::disk('local')->get($pNews);
+            $parsedNewsArr[] = json_decode($newsPath);
+        }
+        return view ('admin.news.index', [
+            'news' => $news,
+            'categories' => $categories,
+            'parsedNews' => $parsedNewsArr,
+        ]);
     }
 
     /**
@@ -45,12 +54,18 @@ class NewsController extends Controller
      */
     public function store(NewsCreate $request)
     {
-        $data = $request->only('title', 'categoryId', 'resourceId', 'description');
+        $data = $request->only('title', 'categoryId', 'resourceId', 'description', 'image');
+
+        if($request->has('image')){
+            $file = $request->file('image');
+            $fileName = $file->getClientOriginalName();
+            $data['image'] = $file->storeAs('news', $fileName, 'uploads');
+        }
         $create = News::create($data);
         if ($create) {
-            return redirect('/form/news')->with('success', 'новость добавлена');
+            return redirect('/admin/news')->with('success', 'новость добавлена');
         }
-        return redirect('/form/news')->with('error', 'новость не добавлена');
+        return redirect('/admin/news')->with('error', 'новость не добавлена');
     }
 
         /**

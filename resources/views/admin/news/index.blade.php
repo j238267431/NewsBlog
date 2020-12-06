@@ -8,6 +8,11 @@
         @endif
         <h3>News list admin page</h3>
             <a href="{{ route('news.create') }}"><p class="btn btn-success">добавить новость</p></a>
+            @forelse($parsedNews as $pNews)
+                <a href="">{{$pNews->title}}</a><p></p>
+            @empty
+                <h3>новостей нет</h3>
+            @endforelse
             @forelse($news as $newsItem)
                 <p>
                     <a href="{{ route('news.edit', $newsItem->id ) }}">
@@ -29,8 +34,6 @@
                 const body = await response;
                 return body;
             }
-            console.log(1)
-
                 const button = document.querySelectorAll('.delete');
                 button.forEach(el => (
                     el.addEventListener('click', function(){

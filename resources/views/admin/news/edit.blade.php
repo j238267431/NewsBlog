@@ -7,6 +7,9 @@
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
         <h3>News add form</h3>
+            <br>
+            <img src=" {{ Storage::disk('uploads')->url($news['image']) }}" alt="">
+            <br>
         <form action="{{ route('news.update', $news['id']) }}" method="POST">
             @method('PUT')
             @csrf
@@ -37,7 +40,7 @@
                 </div>
             @endforeach
             @enderror
-            <p>содержание</p><textarea class="form-control" name="description">{!! $news['description'] !!}</textarea>
+            <p>содержание</p><textarea class="form-control" name="description" id="editor">{!! $news['description'] !!}</textarea>
             @error('description')
             @foreach($errors->get('description') as $error)
                 <div class = "alert alert-danger">
@@ -50,4 +53,14 @@
         </form>
     </div>
 @stop
+@push('js')
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.1.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#editor' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+@endpush
 

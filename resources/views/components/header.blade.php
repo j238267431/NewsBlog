@@ -37,12 +37,13 @@
                                         <li><a href="contact.html">Contact</a></li>
                                     </ul>
                                 </li>
+
                                 <li><a href="#">Categories</a>
                                     <div class="dropdown">
                                         <ul class="single-mega cn-col-4">
                                             @foreach($categories as $category)
                                                 <li>
-                                                    <a href="{{ route('categories', ['id' => $category->id]) }}">
+                                                    <a href="{{ route('categories.show', $slug = $category->name) }}">
                                                         {{ $category->name }}
                                                     </a>
                                                 </li>

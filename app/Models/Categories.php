@@ -11,4 +11,13 @@ class Categories extends Model
 
     protected $table = 'categories';
     protected $primaryKey = 'id';
+    protected $fillable = ['name'];
+    public $timestamps = false;
+
+    public function news()
+    {
+        return $this->hasMany(News::class, 'categoryId');
+    }
 }
+
+
