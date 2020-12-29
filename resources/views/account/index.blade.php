@@ -86,7 +86,10 @@
                             </div>
                             <!-- Thumbnail -->
                             <div class="about-thumbnail">
-                                <img src="{{asset('img/blog-img/about-me.jpg')}}" alt="">
+{{--                                <img src="{{asset('img/blog-img/about-me.jpg')}}" alt="">--}}
+
+                                <img src=" {{ Storage::disk('uploads')->url($profile->image) }}" alt="">
+
                             </div>
                             <!-- Content -->
                             <div class="widget-content text-center">

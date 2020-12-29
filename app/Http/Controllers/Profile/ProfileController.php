@@ -46,8 +46,12 @@ class ProfileController extends Controller
      */
     public function store(ProfileCreate $request)
     {
-//        $birthday = $request->attributes('birthday');
-
+//        dd($request);
+        if($test = $request->has('image')){
+            $file = $request->file('image');
+            $fileName = $file->getClientOriginalName();
+            $data['image'] = $file->storeAs('profiles', '$fileName', 'uploads');
+        }
         $data = $request->only(['day_of_birth', 'image']);
         $idProfile = UsersProfiles::insertGetId($data);
         $userId = \Auth::id();
@@ -80,11 +84,10 @@ class ProfileController extends Controller
 
     public function edit(UsersProfiles $usersProfiles)
     {
-        $profile = User::find(\Auth::id())->profiles;
-        $usersProfiles->getAttributes();
+//        $profile = User::find(\Auth::id())->profiles;
         return view('profiles.edit', [
             'categories' => $this->getCategoryList(),
-            'profile' => $profile,
+            'profile' => $usersProfiles,
             'today' => date('Y-m-d'),
         ]);
     }
@@ -98,12 +101,16 @@ class ProfileController extends Controller
      */
     public function update(Request $request, UsersProfiles $usersProfiles)
     {
+        $user_id = \Auth::id();
         $data = $request->only(['day_of_birth', 'image']);
         if($request->has('image')){
             $file = $request->file('image');
-//            $fileName = $file->getClientOriginalName();
-            $data['image'] = $file->storeAs('profiles', '$fileName', 'uploads');
+            $fileName = $file->getClientOriginalName();
+            $data['image'] = $file->storeAs('profiles/'.$user_id, $fileName, 'uploads');
         }
+        $id = $usersProfiles->getAttribute('id');
+        $row = UsersProfiles::find($id);
+        $row->update($data);
     }
 
     /**

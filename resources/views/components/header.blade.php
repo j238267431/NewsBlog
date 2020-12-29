@@ -60,7 +60,7 @@
                             <!-- Search Form -->
                             <div class="search-form">
                                 <form action="#" method="get">
-                                    <input type="search" name="search" class="form-control" placeholder="Search and hit enter...">
+                                    <input id="search" type="search" name="search" class="form-control" placeholder="Search and hit enter...">
                                     <button type="submit"><i class="fa fa-search"></i></button>
                                 </form>
                             </div>
@@ -82,3 +82,34 @@
         </div>
     </div>
 </header>
+
+
+@push('js')
+    <script>
+        $('.form-control').on('keyup', function(){
+            event.preventDefault()
+            let searchWord = $(this).val();
+            let last = searchWord.toString().slice(-1);
+            while(last.match("^[a-zA-Z0-9а-яА-ЯЁё\'\"]*$") == null){
+                $(this).val(searchWord.slice(0,-1));
+                searchWord = $(this).val()
+                last = searchWord.toString().slice(-1);
+            }
+            searchWord = $(this).val()
+            $.ajax({
+                url:'{{ route('searchSimple') }}',
+                type:"GET",
+                data:{searchWord: searchWord},
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrf-token"]').attr('content'),
+                },
+                success: function (data){
+                    $('#all_news_wrap').html(data);
+                },
+                error: function (msg){
+                    console.log(msg)
+                }
+            })
+        })
+    </script>
+@endpush

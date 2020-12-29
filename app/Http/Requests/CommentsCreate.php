@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class ProfileCreate extends FormRequest
+class CommentsCreate extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class ProfileCreate extends FormRequest
     public function rules()
     {
         return [
-            'image' => 'sometimes'
+            'body' => 'required|max:256'
         ];
     }
 }

@@ -152,6 +152,9 @@ return [
         'categoryId' => 'id категории',
         'resourceId' => ' id источника',
         'description' => 'содержание новости',
+        'name' => 'имя',
+        'email' => 'электронная почта',
+        'body' => 'текст'
     ],
 
 ];

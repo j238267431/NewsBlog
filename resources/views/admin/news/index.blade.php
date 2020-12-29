@@ -34,7 +34,7 @@
                 const body = await response;
                 return body;
             }
-                const button = document.querySelectorAll('.delete');
+                const button = document.querySelectorAll('.reply');
                 button.forEach(el => (
                     el.addEventListener('click', function(){
                         fetchData("{{ url('/admin/news') }}/" + this.getAttribute('rel'), {

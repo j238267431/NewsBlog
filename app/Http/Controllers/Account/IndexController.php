@@ -27,11 +27,13 @@ class IndexController extends Controller
 
     public function index(){
 
+        $profile = User::find(Auth::id())->profiles;
         return view('account.index', [
             'categories' => $this->getCategoryList(),
             'user' => Auth::user(),
             'idProfileIsSet' => $this->isUserGetProfile(),
             'currentDate' => $this->getCurrentDate(),
+            'profile' => $profile
         ]);
 //        echo "Добро пожаловать - " . Auth::user()->name;
     }
