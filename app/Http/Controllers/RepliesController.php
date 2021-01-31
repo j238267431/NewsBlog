@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RepliesCreate;
 use App\Models\RepliesComments;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class RepliesController extends Controller
 {
-    public function store(Request $request)
+    public function store(RepliesCreate $request)
     {
         $toCommentId = $request->commentId;
         $body = $request->body;

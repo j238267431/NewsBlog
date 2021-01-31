@@ -7,6 +7,7 @@ use App\Http\Requests\NewsCreate;
 use App\Http\Requests\NewsUpdate;
 use App\Models\Categories;
 use App\Models\news;
+use App\Models\ParsedNews;
 use Dotenv\Exception\ValidationException;
 use http\Exception\InvalidArgumentException;
 use Illuminate\Http\Request;
@@ -19,19 +20,17 @@ class NewsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($slug)
     {
-        $categories = Categories::all();
-        $news = News::orderBy('id', 'desc')->paginate(4);
-        $parsedNews = \Storage::disk('local')->files('/https:/news.yandex.ru');
-        foreach($parsedNews as $pNews){
-            $newsPath = \Storage::disk('local')->get($pNews);
-            $parsedNewsArr[] = json_decode($newsPath);
-        }
+//        if(isset($_GET['slug'])) {
+//            $slug = $_GET['slug'];
+//        }
+        $news = ParsedNews::orderBy('id', 'desc')->where('slug', '=', $slug)->paginate(4);
+
         return view ('admin.news.index', [
             'news' => $news,
-            'categories' => $categories,
-            'parsedNews' => $parsedNewsArr,
+            'categories' => $this->getCategoryList(),
+            'slug'=>$slug,
         ]);
     }
 
@@ -82,51 +81,59 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\news  $news
+     * @param ParsedNews $news
      * @return \Illuminate\Http\Response
      */
-    public function edit(news $news)
+    public function edit($id)
     {
-        $categories = Categories::all();
-        $data = $news->getAttributes();
+        $data = ParsedNews::find($id);
         return view('admin.news.edit', [
             'news' => $data,
-            'categories' => $categories
+            'categories' => $this->getCategoryList(),
+            'slug' => $data->slug,
+            'id' => $data->id,
+
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\news  $news
+     * @param NewsUpdate $request
+     * @param ParsedNews $news
      * @return \Illuminate\Http\Response
      */
-    public function update(NewsUpdate $request, news $news)
+    public function update(NewsUpdate $request, ParsedNews $news)
     {
+
         $categories = Categories::all();
         $id = $news->getAttribute('id');
-        $row = News::find($id);
+        $row = ParsedNews::find($id);
         $row->update([
             'title' => $request->input('title'),
-            'categoryId' => $request->input('categoryId'),
-            'resourceId' => $request->input('resourceId'),
+            'slug' => $request->input('categoryId'),
             'description' => $request->input('description'),
         ]);
 
-        return redirect()->route('news.index')->with('success', 'Новость изменена');
+        return redirect()->route('admin.news', ['slug' => $row->slug])->with('success', 'Новость изменена');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\news  $news
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function destroy(news $news)
+    public function destroy()
     {
-        $news->delete();
+        $row = ParsedNews::find($_GET['news']);
+        $row->delete();
+        return redirect()->route('admin.news', ['slug' => $row->slug])->with('success', 'Новость удалена');
+
+
 //        return response()->json(['data' => 'delete']);
 //        return redirect()->route('news.index');
     }
+
+
 }

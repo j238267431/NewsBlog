@@ -8,8 +8,10 @@ use App\Http\Requests\ProfileUpdate;
 use App\Models\News;
 use App\Models\User;
 use App\Models\UsersProfiles;
+use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 
 class ProfileController extends Controller
 {
@@ -47,10 +49,10 @@ class ProfileController extends Controller
     public function store(ProfileCreate $request)
     {
 //        dd($request);
-        if($test = $request->has('image')){
+        if($request->has('image')){
             $file = $request->file('image');
             $fileName = $file->getClientOriginalName();
-            $data['image'] = $file->storeAs('profiles', '$fileName', 'uploads');
+            $data['image'] = $file->storeAs('profiles', $fileName, 'uploads');
         }
         $data = $request->only(['day_of_birth', 'image']);
         $idProfile = UsersProfiles::insertGetId($data);
@@ -107,7 +109,9 @@ class ProfileController extends Controller
             $file = $request->file('image');
             $fileName = $file->getClientOriginalName();
             $data['image'] = $file->storeAs('profiles/'.$user_id, $fileName, 'uploads');
+
         }
+
         $id = $usersProfiles->getAttribute('id');
         $row = UsersProfiles::find($id);
         $row->update($data);

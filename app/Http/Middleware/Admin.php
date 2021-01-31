@@ -22,6 +22,6 @@ class Admin
             return $next($request);
         }
 //        return redirect()->route('account');
-        return abort('404');
+        return redirect()->route('categories')->with('adminError', 'у Вас нет доступа на эту страницу');
     }
 }

@@ -13,7 +13,7 @@ class CreateTableRepliesToComments extends Migration
      */
     public function up()
     {
-        Schema::create('replies', function (Blueprint $table) {
+        Schema::create('replies_to_comments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('to_comment_id')
                 ->nullable('false')
@@ -30,6 +30,6 @@ class CreateTableRepliesToComments extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('replies');
+        Schema::dropIfExists('replies_to_comments');
     }
 }

@@ -64,7 +64,8 @@ img {
     width: 100%;
     top: 0;
     right: 0;
-    left: 0; }
+    /*left: 0; */
+  }
   .classy-nav-container.box-skins .classynav > ul > li {
     background-color: #1abc9c; }
     .classy-nav-container.box-skins .classynav > ul > li > a {
@@ -189,7 +190,7 @@ img {
   width: 100%;
   height: 100%;
   top: 0;
-  left: 0;
+  /*left: 0;*/
   background-color: transparent;
   cursor: pointer;
   z-index: 500;
@@ -217,12 +218,12 @@ img {
       background: #232323; }
       .classycloseIcon .cross-wrap span.top {
         top: 12px;
-        left: 0;
+        /*left: 0;*/
         -webkit-transform: rotate(45deg);
         transform: rotate(45deg); }
       .classycloseIcon .cross-wrap span.bottom {
         bottom: 12px;
-        left: 0;
+        /*left: 0;*/
         -webkit-transform: rotate(-45deg);
         transform: rotate(-45deg); }
 
@@ -261,7 +262,7 @@ img {
 .classynav ul li .megamenu {
   position: absolute;
   width: 100%;
-  left: 0;
+  /*left: 0;*/
   top: 100%;
   background-color: #ffffff;
   z-index: 200;
@@ -338,7 +339,6 @@ img {
   position: absolute;
   background-color: #ffffff;
   top: 120%;
-  left: 0;
   z-index: 100;
   height: auto;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
@@ -385,7 +385,7 @@ img {
   visibility: hidden;
   position: absolute;
   width: 100%;
-  left: 0;
+  /*left: 0;*/
   top: 120%;
   background-color: #ffffff;
   z-index: 200;
@@ -418,7 +418,8 @@ img {
   overflow-x: hidden;
   overflow-y: scroll; }
   .breakpoint-on .classy-navbar .classy-menu.menu-on {
-    left: 0; }
+    /*left: 0; */
+  }
 .breakpoint-on .classynav ul li {
   display: block;
   position: relative;
@@ -432,20 +433,21 @@ img {
     width: 100%;
     position: relative;
     top: 0;
-    left: 0;
+    /*left: 0;*/
     box-shadow: none; }
     .breakpoint-on .classynav ul li .dropdown li .dropdown {
       width: 100%;
       position: relative;
       top: 0;
-      left: 0; }
+      /*left: 0; */
+      }
   .breakpoint-on .classynav ul li.megamenu-item {
     position: relative;
     z-index: 10; }
 .breakpoint-on .dd-trigger {
   height: 38px;
   top: 0;
-  left: 0;
+  /*left: 0;*/
   right: 0;
   bottom: 0;
   display: block; }
@@ -457,7 +459,7 @@ img {
   .breakpoint-on .classynav ul li .megamenu {
     position: relative;
     width: 100%;
-    left: 0;
+    /*left: 0;*/
     top: 0;
     z-index: 200;
     box-shadow: none; }

@@ -32,6 +32,7 @@ class NewsParsing implements ShouldQueue
      */
     public function handle()
     {
+
         $this->service->saveData();
     }
 }

@@ -19,18 +19,49 @@ use phpDocumentor\Reflection\Types\Collection;
 class CategoriesController extends Controller
 {
 use ParserTrait;
-    public function index()
+    public function index(Request $request)
     {
-//        dd(Categories::find(1)->news);
-        $categories = $this->getCategoryList();
-        $news = ParsedNews::paginate(30);
-//        if(isset($_GET['slug'])){
-//            $news = ParsedNews::all()->where('slug', '=', $_GET['slug']);
-//        }
+
+//        $news = ParsedNews::paginate(10);
+
+        $q = $request->searchWord;
+        $slug = $request->slug;
+        $max_page = 10;
+        //Полнотекстовый поиск с пагинацией
+        if($q == ''){
+            if($slug == '') {
+                $results = ParsedNews::orderByDesc('pubDateFormatted')
+                    ->paginate($max_page);
+            } else {
+                $results = ParsedNews::orderByDesc('pubDateFormatted')
+                    ->where('slug', '=', $slug)
+                    ->paginate($max_page);            }
+        } else {
+            if($slug == '') {
+                $results = ParsedNews::query()
+                    ->orderByDesc('pubDateFormatted')
+                    ->where('title', 'like', "%$q%")
+                    ->paginate($max_page);
+            } else {
+                $results = ParsedNews::query()
+                    ->orderByDesc('pubDateFormatted')
+                    ->where('title', 'like', "%$q%")
+                    ->where('slug', '=', $slug)
+                    ->paginate($max_page);
+            }
+
+        }
+
+        if($request->ajax()) {
+            return view('allNews', [
+                'include' => 'search.table',
+                'titleNews' => $results,
+            ])->render();
+        }
 
             return view('categories.categories', [
                 'categories' => $this->getCategoryList(),
-                'titleNews' => $news,
+                'titleNews' => $results,
             ]);
 
     }
@@ -40,7 +71,7 @@ use ParserTrait;
         $oneCategory = Categories::where('name', '=', $slug)->first();
         $categories = $this->getCategoryList();
 //        $news = ParsedNews::all()->where('slug', '=', $slug);
-        $news = DB::table('parsedNews')
+        $titleNews = DB::table('parsedNews')
             ->orderBy('pubDateFormatted', 'desc')
             ->where('slug', '=', $slug)
             ->paginate(10);
@@ -48,13 +79,14 @@ use ParserTrait;
             'slug' => $slug,
             'categories' => $this->getCategoryList(),
             'oneCategory' => $oneCategory,
-            'news' => $news,
+            'titleNews' => $titleNews,
         ]);
     }
 
 
     public function showNews(Request $request, $slug=null, $id=null)
     {
+
 
         if ($request->ajax()) {
             $slug = $request->slug;
@@ -78,6 +110,11 @@ use ParserTrait;
             ->where('news_id', '=', $id)
             ->where('to_comment_id', '=', null)
             ->count();
+        $interestingNews = ParsedNews::query()
+            ->where('slug', '=', $oneNews->slug)
+            ->where('id', '!=', $oneNews->id)
+            ->get()
+            ->random(2);
 
         $categories = $this->getCategoryList();
         if(isset($request)) {
@@ -101,6 +138,7 @@ use ParserTrait;
             'categories',
             'user',
             'replies',
-            'commentsQty']));
+            'commentsQty',
+            'interestingNews']));
     }
 }

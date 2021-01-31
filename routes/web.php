@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,7 +25,9 @@ Route::group(['middleware' => 'guest'], function(){
 });
 
 
-Route::get('/parser', [App\Http\Controllers\PareserController::class, 'index']);
+Route::get('/parser', [App\Http\Controllers\PareserController::class, 'index'])
+    ->middleware('admin')
+    ->name('parser');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/categories', [App\Http\Controllers\Categories\CategoriesController::class, 'index'])
     ->name('categories');
@@ -53,23 +54,50 @@ Route::resources([
     '/form/request' => App\Http\Controllers\ReqController::class
 ]);
 
+
+
+
 Route::get('searchSimple', [\App\Http\Controllers\SearchController::class, 'index'])->name('searchSimple');
+Route::get('/', function () {
+    return Redirect::away('http://yandex.ru');
+})->name('yandex');
 
 Route::middleware('auth')->group(function(){
+    Route::post('password/update', [\App\Http\Controllers\Auth\UpdatePasswordController::class, 'changePassword'])
+        ->name('password.update');
     Route::prefix('account')->group(function(){
-        route::get('/', [App\Http\Controllers\Account\IndexController::class, 'index'])
+        route::get('', [App\Http\Controllers\Account\IndexController::class, 'index'])
         ->name('account');
+        route::post('update', [\App\Http\Controllers\Account\IndexController::class, 'accountUpdate'])
+            ->name('account.update');
+        route::post('image.update', [\App\Http\Controllers\Account\IndexController::class, 'imageChange'])
+            ->name('image.update');
+        route::post('account.create', [\App\Http\Controllers\Account\IndexController::class, 'profileCreate'])
+            ->name('image.create');
     });
 
     Route::resource(
         'profile', \App\Http\Controllers\Profile\ProfileController::class
     )->parameters(['profile' => 'usersProfiles']);
     Route::prefix('admin')->middleware('admin')->group(function(){
+        Route::get('/',[\App\Http\Controllers\Admin\IndexController::class, 'index'])->name('admin');
+        Route::get('categories', [\App\Http\Controllers\Admin\CategoriesController::class, 'index'])
+            ->name('admin.categories');
+        Route::get('news.delete', [\App\Http\Controllers\Admin\NewsController::class, 'destroy'])
+            ->name('admin.news.delete');
+        Route::get('news/{slug}', [\App\Http\Controllers\Admin\NewsController::class, 'index'])
+            ->name('admin.news');
         Route::resources([
             '/users' => App\Http\Controllers\Admin\UsersController::class,
             '/news' => App\Http\Controllers\Admin\NewsController::class,
         ]);
+        Route::get('search', [\App\Http\Controllers\Admin\SearchController::class, 'index'])
+            ->name('admin.searchSimple');
+
+        Route::get('categories/{slug}',[\App\Http\Controllers\Admin\CategoriesController::class, 'show'])
+        ->name('category.show');
     });
+
 
 
 });

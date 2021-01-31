@@ -24,8 +24,11 @@ class ProfileUpdate extends FormRequest
     public function rules()
     {
         return [
+            'name' => 'required',
+            'email' => 'required',
+            'city_of_origin' => 'required',
             'date_of_birth' => 'date',
-            'image' => 'string'
+            'image' => 'string',
         ];
     }
 }

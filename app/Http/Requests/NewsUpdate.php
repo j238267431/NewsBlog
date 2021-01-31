@@ -25,8 +25,7 @@ class NewsUpdate extends FormRequest
     {
         return [
             'title' => 'required|string|min:3',
-            'categoryId' => 'required|integer',
-            'resourceId' => 'required|integer',
+            'categoryId' => 'required|string',
             'description' => 'required|string'
         ];
     }

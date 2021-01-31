@@ -34,6 +34,9 @@
 
                             <a href="#"id="like" data-type="comment" data-comment_id="{{ $comment->id }}">Like</a>
                             <a class="active reply" id="reply"  data-id="{{ $comment->id }}" href="#">Reply</a>
+                            <div id="error{{ $comment->id }}" class="alert alert-danger print-error-msg" style="display:none; margin-top: 10px">
+                                <ul></ul>
+                            </div>
                             <div style="display: none" id="hidden{{$comment->id}}">
                                 <textarea class="textarea" data-textId="{{$comment->id}}"  name="body" id="body{{$comment->id}}" cols="60" rows="10"></textarea>
                                 <p>
@@ -44,7 +47,12 @@
                                        data-newsId="{{ $id }}"
                                        data-id="{{$comment->id}}"
                                     >Send</a>
+                                    <a href="#" class="active"
+                                       id="close"
+                                       data-toCommId="{{ $comment->id }}"
+                                    >Close</a>
                                 </p>
+
                             </div>
                         </div>
                     </div>
@@ -84,7 +92,7 @@
                     @endforeach
             </li>
         @empty
-            {{'комментариев нет'}}
+
         @endforelse
     </ol>
     {{$comments->links()}}
