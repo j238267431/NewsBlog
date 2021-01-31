@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Categories;
 
 use App\Http\Controllers\Controller;
+use App\Models\comments;
 use App\Models\News;
 use App\Models\ParsedNews;
+use App\Models\RepliesComments;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Categories;
 use App\Traits\ParserTrait;
@@ -15,18 +19,49 @@ use phpDocumentor\Reflection\Types\Collection;
 class CategoriesController extends Controller
 {
 use ParserTrait;
-    public function index()
+    public function index(Request $request)
     {
-//        dd(Categories::find(1)->news);
-        $categories = $this->getCategoryList();
-        $news = News::all()->take(5);
-        if(isset($_GET['slug'])){
-            $news = ParsedNews::all()->where('slug', '=', $_GET['slug']);
+
+//        $news = ParsedNews::paginate(10);
+
+        $q = $request->searchWord;
+        $slug = $request->slug;
+        $max_page = 10;
+        //Полнотекстовый поиск с пагинацией
+        if($q == ''){
+            if($slug == '') {
+                $results = ParsedNews::orderByDesc('pubDateFormatted')
+                    ->paginate($max_page);
+            } else {
+                $results = ParsedNews::orderByDesc('pubDateFormatted')
+                    ->where('slug', '=', $slug)
+                    ->paginate($max_page);            }
+        } else {
+            if($slug == '') {
+                $results = ParsedNews::query()
+                    ->orderByDesc('pubDateFormatted')
+                    ->where('title', 'like', "%$q%")
+                    ->paginate($max_page);
+            } else {
+                $results = ParsedNews::query()
+                    ->orderByDesc('pubDateFormatted')
+                    ->where('title', 'like', "%$q%")
+                    ->where('slug', '=', $slug)
+                    ->paginate($max_page);
+            }
+
+        }
+
+        if($request->ajax()) {
+            return view('allNews', [
+                'include' => 'search.table',
+                'titleNews' => $results,
+            ])->render();
         }
 
             return view('categories.categories', [
                 'categories' => $this->getCategoryList(),
-                'titleNews' => $news,
+                'titleNews' => $results,
             ]);
 
     }
@@ -36,7 +71,7 @@ use ParserTrait;
         $oneCategory = Categories::where('name', '=', $slug)->first();
         $categories = $this->getCategoryList();
 //        $news = ParsedNews::all()->where('slug', '=', $slug);
-        $news = DB::table('parsedNews')
+        $titleNews = DB::table('parsedNews')
             ->orderBy('pubDateFormatted', 'desc')
             ->where('slug', '=', $slug)
             ->paginate(10);
@@ -44,17 +79,66 @@ use ParserTrait;
             'slug' => $slug,
             'categories' => $this->getCategoryList(),
             'oneCategory' => $oneCategory,
-            'news' => $news,
+            'titleNews' => $titleNews,
         ]);
     }
-    public function showNews($slug, $id)
+
+
+    public function showNews(Request $request, $slug=null, $id=null)
     {
+
+
+        if ($request->ajax()) {
+            $slug = $request->slug;
+            $id = $request->id;
+        }
+        $replies = RepliesComments::all()
+            ->sortByDesc('created_at');
+
         $oneNews = ParsedNews::find($id);
-        return view('categories.showNews', [
-            'slug' => $slug,
-            'id' => $id,
-            'categories' => $this->getCategoryList(),
-            'oneNews' => $oneNews
-        ]);
+        $user = null;
+        if(!empty(Auth::id())){
+            $user = User::find(Auth::id());
+        }
+        $comments = DB::table('comments')
+            ->where('news_id', '=', $id)
+            ->where('to_comment_id', '=', null)
+            ->orderBy('created_at', 'desc')
+            ->paginate(2);
+
+        $commentsQty = comments::all()
+            ->where('news_id', '=', $id)
+            ->where('to_comment_id', '=', null)
+            ->count();
+        $interestingNews = ParsedNews::query()
+            ->where('slug', '=', $oneNews->slug)
+            ->where('id', '!=', $oneNews->id)
+            ->get()
+            ->random(2);
+
+        $categories = $this->getCategoryList();
+        if(isset($request)) {
+            if ($request->ajax()) {
+                return view('comments', compact([
+                    'slug',
+                    'comments',
+                    'oneNews',
+                    'id',
+                    'categories',
+                    'user',
+                    'replies',
+                    'commentsQty']))->render();
+            }
+        }
+        return view('categories.showNews', compact([
+            'slug',
+            'comments',
+            'oneNews',
+            'id',
+            'categories',
+            'user',
+            'replies',
+            'commentsQty',
+            'interestingNews']));
     }
 }

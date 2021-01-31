@@ -1,241 +1,164 @@
 @extends('layouts.main')
 @section('content')
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10 col-xl-8 mx-auto">
+                <h2 class="h3 mb-4 page-title">Settings</h2>
+                <div class="my-4">
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{session('success')}}
+                        </div>
+                    @elseif(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+                    <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="false">Profile</a>
+                        </li>
+                    </ul>
 
-    <section class="blog-content-area section-padding-100">
-        <div class="container">
-            <div class="row justify-content-center">
-                <!-- Blog Posts Area -->
-                <div class="col-12 col-lg-8">
-                    <div class="blog-posts-area">
-                        <div class="row">
-                            <!-- Featured Post Area -->
-                            <div class="col-12">
-                                <div class="featured-post-area mb-50">
-                                    <!-- Thumbnail -->
-                                    <div class="post-thumbnail mb-30">
-                                        <a href="#"><img src="{{asset('img/blog-img/12.jpg')}}" alt=""></a>
+
+
+                        <div class="row mt-5 align-items-center">
+                            <div class="col-md-3 text-center mb-5">
+                                <div class="avatar avatar-xl">
+                                    <img src="{{ Storage::disk('uploads')->url($profile->image) }}" alt="фото не выбрано" class="avatar-img rounded-circle" />
+{{--                                    <img src="{{asset($profile->image)}}" alt="" class="avatar-img rounded-circle" />--}}
+
+                                    <form action="{{route('image.update')}}" method="post" enctype="multipart/form-data">
+                                        @csrf
+                                        <label style="margin-top: 10px;" class="btn btn-primary" for="inputId">выбрать фото</label>
+                                        <input id="inputId" type="file" name="image" style="position: fixed; top: -100em">
+                                        <button type="submit" class="btn btn-primary">Сохранить</button>
+                                    </form>
+                                </div>
+                            </div>
+{{--                            <div class="col">--}}
+{{--                                <div class="row align-items-center">--}}
+{{--                                    <div class="col-md-7">--}}
+{{--                                        <h4 class="mb-1">{{ $user->name }}</h4>--}}
+{{--                                        <p class="small mb-3"><span class="badge badge-dark">{{$profile->city_of_origin}}</span></p>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="row mb-4">--}}
+{{--                                    <div class="col-md-7">--}}
+{{--                                        <p class="text-muted">--}}
+{{--                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris blandit nisl ullamcorper, rutrum metus in, congue lectus. In hac habitasse platea dictumst. Cras urna quam, malesuada vitae risus at,--}}
+{{--                                            pretium blandit sapien.--}}
+{{--                                        </p>--}}
+{{--                                    </div>--}}
+{{--                                    <div class="col">--}}
+{{--                                        <p class="small mb-0 text-muted">Nec Urna Suscipit Ltd</p>--}}
+{{--                                        <p class="small mb-0 text-muted">P.O. Box 464, 5975 Eget Avenue</p>--}}
+{{--                                        <p class="small mb-0 text-muted">(537) 315-1481</p>--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+                            <form action="{{route('account.update')}}" method="POST">
+                                @csrf
+                                <hr class="my-4" />
+                                <div class="form-group">
+                                    <label for="firstname">ФИО</label>
+                                    <input type="text" id="firstname" class="form-control" value="{{$user->name}}" name="name" placeholder="" />
+                                </div>
+                                @error('name')
+                                @foreach($errors->get('name') as $error)
+                                    <div class = "alert alert-danger">
+                                        {{ $error }}
                                     </div>
-                                    <!-- Featured Post Content -->
-                                    <div class="featured-post-content">
-                                        <p class="post-date">MAY 7, 2018 / lifestyle</p>
-                                        <a href="#" class="post-title">
-                                            <h2>A Closer Look At Our Front Porch Items From Lowe’s</h2>
-                                        </a>
-                                        <p class="post-excerpt">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium</p>
+                                @endforeach
+                                @enderror
+                                <div class="form-group">
+                                    <label for="inputEmail4">Адрес электронной почты</label>
+                                    <input type="email" class="form-control" id="inputEmail4" name="email" value="{{$user->email}}" placeholder="" />
+                                </div>
+                                @error('email')
+                                @foreach($errors->get('email') as $error)
+                                    <div class = "alert alert-danger">
+                                        {{ $error }}
                                     </div>
-                                    <!-- Post Meta -->
-                                    <div class="post-meta d-flex align-items-center justify-content-between">
-                                        <!-- Author Comments -->
-                                        <div class="author-comments">
-                                            <a href="#"><span>by</span> Colorlib</a>
-                                            <a href="#">03 <span>Comments</span></a>
-                                        </div>
-                                        <!-- Social Info -->
-                                        <div class="social-info">
-                                            <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                                            <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                                            <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                                            <a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                                        </div>
+                                @endforeach
+                                @enderror
+                                <div class="form-group">
+                                    <label for="ciy">Город</label>
+                                    <input value="{{$profile->city_of_origin}}" type="text" class="form-control" id="city" name="city_of_origin" placeholder="" />
+                                </div>
+                                @error('city_of_origin')
+                                @foreach($errors->get('city_of_origin') as $error)
+                                    <div class = "alert alert-danger">
+                                        {{ $error }}
                                     </div>
+                                @endforeach
+                                @enderror
+                                <div class="form-group">
+                                    <label for="day_of_birth">Дата рождения</label>
+                                    <input value="{{$profile->day_of_birth}}" type="date" class="form-control" name="day_of_birth" max="{{ $currentDate }}" id="day_of_birth" placeholder="" />
                                 </div>
-                            </div>
+                                <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                            </form>
+                        </div>
 
-                            <!-- Single Blog Post -->
 
-                                <div class="col-12 col-sm-6">
-                                    <div class="single-blog-post mb-50">
-                                        <!-- Thumbnail -->
-                                        <div class="post-thumbnail">
-                                            <a href="">
-                                                <img src="" alt="someImg">
-                                            </a>
-                                        </div>
-                                        <!-- Content -->
-                                        <div class="post-content">
-                                            <p class="post-date">MAY 10, 2018 / life</p>
-                                            <a href="" class="post-title">
-                                                <h4>{{ 'title' }}</h4>
-                                            </a>
-                                            <p class="post-excerpt">{{ 'description' }}.</p>
-                                        </div>
+
+                        <hr class="my-4" />
+                    <form action="{{route('password.update')}}" method="POST">
+                        @csrf
+                        <div class="row mb-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inputPassword4">текущий пароль</label>
+                                    <input type="password" class="form-control" id="inputPassword5" name="current_password" value="{{old('current_password')}}" />
+                                </div>
+                                @error('current_password')
+                                @foreach($errors->get('current_password') as $error)
+                                    <div class = "alert alert-danger">
+                                        {{ $error }}
                                     </div>
+                                @endforeach
+                                @enderror
+                                <div class="form-group">
+                                    <label for="inputPassword5">новый пароль</label>
+                                    <input type="password" class="form-control" id="inputPassword5" name="new_password" />
                                 </div>
+                                @error('new_password')
+                                @foreach($errors->get('new_password') as $error)
+                                    <div class = "alert alert-danger">
+                                        {{ $error }}
+                                    </div>
+                                @endforeach
+                                @enderror
+                                <div class="form-group">
+                                    <label for="inputPassword6">введите новый пароль повторно</label>
+                                    <input type="password" class="form-control" id="inputPassword6" name="new_password_confirmation" />
+                                </div>
+                                @error('new_password_confirmation')
+                                @foreach($errors->get('new_password_confirmation') as $error)
+                                    <div class = "alert alert-danger">
+                                        {{ $error }}
+                                    </div>
+                                @endforeach
+                                @enderror
 
 
 
-                        </div>
-                    </div>
-
-                    <!-- Pager -->
-                    <ol class="nikki-pager">
-                        <li><a href="#"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Newer</a></li>
-                        <li><a href="#">Older <i class="fa fa-long-arrow-right" aria-hidden="true"></i></a></li>
-                    </ol>
-                </div>
-
-                <!-- Blog Sidebar Area -->
-                <div class="col-12 col-sm-9 col-md-6 col-lg-4">
-                    <div class="post-sidebar-area">
-
-                        <!-- ##### Single Widget Area ##### -->
-                        <div class="single-widget-area mb-30">
-                            <!-- Title -->
-                            <div class="widget-title">
-                                <h6>{{ $user->name }}</h6>
                             </div>
-                            <!-- Thumbnail -->
-                            <div class="about-thumbnail">
-                                <img src="{{asset('img/blog-img/about-me.jpg')}}" alt="">
-                            </div>
-                            <!-- Content -->
-                            <div class="widget-content text-center">
-                                <img src="{{asset('img/core-img/signature.png')}}" alt="">
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ipsum adipisicing</p>
-                            </div>
-                        </div>
-
-                        <!-- ##### Single Widget Area ##### -->
-                        <div class="single-widget-area mb-30">
-                            <!-- Title -->
-                            <div class="widget-title">
-                                @if($idProfileIsSet)
-                                    <h6><a href="{{ route('profile.edit', $user->id_profile ) }}">edit profile</a></h6>
-                                @else
-                                    <h6><a href="{{ route('profile.create') }}">create profile</a></h6>
-                                @endif
-                            </div>
-                            <!-- Widget Social Info -->
-                            <div class="widget-social-info text-center">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                                <a href="#"><i class="fa fa-instagram"></i></a>
-                                <a href="#"><i class="fa fa-google-plus"></i></a>
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                                <a href="#"><i class="fa fa-rss"></i></a>
+                            <div class="col-md-6">
+                                <p class="mb-2">Требования к паролю</p>
+                                <p class="small text-muted mb-2">Чтобы создать пароль нужно следовать следующим правилам:</p>
+                                <ul class="small text-muted pl-4 mb-0">
+                                    <li>Минимум 8 символов</li>
+                                    <li>Новый пароль не может быть таким же как текущий</li>
+                                </ul>
                             </div>
                         </div>
-
-                        <!-- ##### Single Widget Area ##### -->
-                        <div class="single-widget-area mb-30">
-                            <!-- Title -->
-                            <div class="widget-title">
-                                <h6>Latest Posts</h6>
-                            </div>
-
-                            <!-- Single Latest Posts -->
-                            <div class="single-latest-post d-flex">
-                                <div class="post-thumb">
-                                    <img src="{{ asset('img/blog-img/lp1.jpg')}}" alt="">
-                                </div>
-                                <div class="post-content">
-                                    <a href="#" class="post-title">
-                                        <h6>10 Books to Read This Summer If You Want to Improve Yourself</h6>
-                                    </a>
-                                    <a href="#" class="post-author"><span>by</span> Colorlib</a>
-                                </div>
-                            </div>
-
-                            <!-- Single Latest Posts -->
-                            <div class="single-latest-post d-flex">
-                                <div class="post-thumb">
-                                    <img src="{{ asset('img/blog-img/lp2.jpg')}}" alt="">
-                                </div>
-                                <div class="post-content">
-                                    <a href="#" class="post-title">
-                                        <h6>Why I Decided to Give up My Favorite Foods and Go Vegan</h6>
-                                    </a>
-                                    <a href="#" class="post-author"><span>by</span> Colorlib</a>
-                                </div>
-                            </div>
-
-                            <!-- Single Latest Posts -->
-                            <div class="single-latest-post d-flex">
-                                <div class="post-thumb">
-                                    <img src="{{ asset('img/blog-img/lp3.jpg')}}" alt="">
-                                </div>
-                                <div class="post-content">
-                                    <a href="#" class="post-title">
-                                        <h6>The 10 Most Instagrammable Spots in San Diego</h6>
-                                    </a>
-                                    <a href="#" class="post-author"><span>by</span> Colorlib</a>
-                                </div>
-                            </div>
-
-                            <!-- Single Latest Posts -->
-                            <div class="single-latest-post d-flex">
-                                <div class="post-thumb">
-                                    <img src="{{ asset('img/blog-img/lp4.jpg')}}" alt="">
-                                </div>
-                                <div class="post-content">
-                                    <a href="#" class="post-title">
-                                        <h6>5 Things to Know About Dating a Bisexual</h6>
-                                    </a>
-                                    <a href="#" class="post-author"><span>by</span> Colorlib</a>
-                                </div>
-                            </div>
-
-                            <!-- Single Latest Posts -->
-                            <div class="single-latest-post d-flex">
-                                <div class="post-thumb">
-                                    <img src="{{ asset('img/blog-img/lp5.jpg')}}" alt="">
-                                </div>
-                                <div class="post-content">
-                                    <a href="#" class="post-title">
-                                        <h6>How to Take Critical Feedback at Work (Like a Boss)</h6>
-                                    </a>
-                                    <a href="#" class="post-author"><span>by</span> Colorlib</a>
-                                </div>
-                            </div>
-
-                        </div>
-
-                        <!-- ##### Single Widget Area ##### -->
-                        <div class="single-widget-area mb-30">
-                            <!-- Adds -->
-                            <a href="#"><img src="{{ asset('img/blog-img/add.png')}}" alt=""></a>
-                        </div>
-
-                        <!-- ##### Single Widget Area ##### -->
-                        <div class="single-widget-area mb-30">
-                            <!-- Title -->
-                            <div class="widget-title">
-                                <h6>Newsletter</h6>
-                            </div>
-                            <!-- Content -->
-                            <div class="newsletter-content">
-                                <p>Subscribe our newsletter for get notification about new updates, information discount, etc.</p>
-                                <form action="#" method="post">
-                                    <input type="email" name="email" class="form-control" placeholder="Your email">
-                                    <button><i class="fa fa-send"></i></button>
-                                </form>
-                            </div>
-                        </div>
-
-                        <!-- ##### Single Widget Area ##### -->
-                        <div class="single-widget-area mb-30">
-                            <!-- Title -->
-                            <div class="widget-title">
-                                <h6>popular tags</h6>
-                            </div>
-                            <!-- Tags -->
-                            <ol class="popular-tags d-flex flex-wrap">
-                                <li><a href="#">LifeStyle</a></li>
-                                <li><a href="#">Sport</a></li>
-                                <li><a href="#">Fashion</a></li>
-                                <li><a href="#">Photography</a></li>
-                                <li><a href="#">Yoga</a></li>
-                                <li><a href="#">Health Food</a></li>
-                                <li><a href="#">Summer Holiday</a></li>
-                                <li><a href="#">Supper Food</a></li>
-                                <li><a href="#">Life</a></li>
-                            </ol>
-                        </div>
-
-                    </div>
+                        <button type="submit" class="btn btn-primary">Сохранить изменения</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
+
+    </div>
 @stop

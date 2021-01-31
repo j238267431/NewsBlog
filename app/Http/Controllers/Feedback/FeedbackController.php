@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Feedback;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FeedbackCreate;
 use App\Models\Categories;
 use App\Models\Feedback;
 use Illuminate\Http\Request;
@@ -26,6 +27,10 @@ class FeedbackController extends Controller
      */
     public function create()
     {
+
+
+
+
         $categories = Categories::all();
         return view('forms.feedback.create', ['categories' => $categories]);
     }
@@ -36,8 +41,17 @@ class FeedbackController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FeedbackCreate $request)
     {
+
+
+        if($request->has('image')){
+            $file = $request->file('image');
+            $fileName = $file->getClientOriginalName();
+            $data['image'] = $file->storeAs('news', $fileName, 'uploads');
+        }
+
+
         $data = $request->only('newsId', 'name', 'feedback');
         $data['newsId'] = 1;
 //        dd($data);

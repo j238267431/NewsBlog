@@ -24,7 +24,7 @@ class ProfileCreate extends FormRequest
     public function rules()
     {
         return [
-            //
+            'image' => 'sometimes'
         ];
     }
 }

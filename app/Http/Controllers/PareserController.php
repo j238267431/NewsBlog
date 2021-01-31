@@ -27,7 +27,7 @@ class PareserController extends Controller
             NewsParsing::dispatch(new ParseService($url));
 
     }
-        echo "Success";
+        return back()->with('success', 'новости добавлены в очередь, для добавления новойстей в базу запустите в терминале команду php artisan queue:work');
 
 //        $parseYndxNews = $data['news'];
 //

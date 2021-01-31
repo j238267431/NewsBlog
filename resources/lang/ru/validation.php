@@ -87,7 +87,7 @@ return [
     'min' => [
         'numeric' => 'The :attribute must be at least :min.',
         'file' => 'The :attribute must be at least :min kilobytes.',
-        'string' => 'The :attribute must be at least :min characters.',
+        'string' => 'Поле :attribute должно быть минимум :min символов.',
         'array' => 'The :attribute must have at least :min items.',
     ],
     'multiple_of' => 'The :attribute must be a multiple of :value',
@@ -104,7 +104,7 @@ return [
     'required_with_all' => 'The :attribute field is required when :values are present.',
     'required_without' => 'The :attribute field is required when :values is not present.',
     'required_without_all' => 'The :attribute field is required when none of :values are present.',
-    'same' => 'The :attribute and :other must match.',
+    'same' => 'Поле :attribute и поле :other должно совпадать.',
     'size' => [
         'numeric' => 'The :attribute must be :size.',
         'file' => 'The :attribute must be :size kilobytes.',
@@ -112,7 +112,7 @@ return [
         'array' => 'The :attribute must contain :size items.',
     ],
     'starts_with' => 'The :attribute must start with one of the following: :values.',
-    'string' => 'The :attribute must be a string.',
+    'string' => 'Поле :attribute должно содержать только буквы.',
     'timezone' => 'The :attribute must be a valid zone.',
     'unique' => 'The :attribute has already been taken.',
     'uploaded' => 'The :attribute failed to upload.',
@@ -135,6 +135,8 @@ return [
             'rule-name' => 'custom-message',
         ],
     ],
+    'current_password_match' => 'Введен неверный :attribute',
+    'password_equal' => 'Новый пароль совпадает с текущим паролем',
 
     /*
     |--------------------------------------------------------------------------
@@ -152,6 +154,13 @@ return [
         'categoryId' => 'id категории',
         'resourceId' => ' id источника',
         'description' => 'содержание новости',
+        'name' => 'имя',
+        'email' => 'электронная почта',
+        'body' => 'текст',
+        'city_of_origin' => 'город',
+        'current_password' => 'текущий пароль',
+        'new_password' => 'новый пароль',
+        'new_password_confirmation' => 'повтора нового пароля',
     ],
 
 ];

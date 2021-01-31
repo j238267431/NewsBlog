@@ -1,22 +1,44 @@
 @extends('layouts.main')
 @section('content')
+    <div class="breadcrumb-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <nav aria-label="breadcrumb">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="{{ route('categories') }}"><i class="fa fa-home"></i> Домой</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">{{ 'Пользователи' }}</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="blog-content-area section-padding-0-100">
+    <div class="container">
+        <div class="single-post-details-area">
     <div class = "col-8 offset-2">
         @if(session('success'))
             <div class="alert alert-success">{{ session('success') }}</div>
         @elseif(session('error'))
             <div class="alert alert-danger">{{ session('error') }}</div>
         @endif
-        <h3>Users list admin page</h3>
+        <h3>Список зарегистрированных пользователей</h3>
         @forelse($users as $user)
-            <p>
+            <p style="position: relative">
                 <a href="{{ route('users.edit', $user->id ) }}">
                     {{ $user->name }}</a> - статус
+
                 @if($user->is_admin == 0)
                     {{ 'user' }}
                 @else
                     {{ 'admin' }}
                 @endif
-                &nbsp; <a style="color: #ff0000" href="javascript:;" class="delete" rel="{{ $user->id }}" >удалить</a>
+                &nbsp; <a @if(Auth::id()==$user->id)
+                          style="pointer-events: none; cursor: default; color: #888"
+                      @else style="color: #ff0000"
+                      @endif
+                  href="javascript:;" class="delete" rel="{{ $user->id }}">удалить</a>
 
             </p>
         @empty
@@ -24,6 +46,9 @@
         @endforelse
         {{$users->links()}}
     </div>
+    </div>
+    </div>
+    </section>
 @stop
 @push('js')
     <script type="text/javascript">

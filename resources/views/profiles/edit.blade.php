@@ -2,8 +2,9 @@
 @section('content')
     <div class = "col-8 offset-2">
         <h3>Profile</h3>
-        <form action="{{ route('profile.update', $profile->id) }}" method="POST">
+        <form action="{{ route('profile.update', $profile->id) }}" method="POST" enctype="multipart/form-data">
             @method('PUT')
+            <meta name="csrf-token" content="{{ csrf_token() }}">
             @csrf
             <p>дата рождения:</p>
             <input class="form-control" type="date" max="{{ $today }}" name="day_of_birth" value="{{ $profile->day_of_birth }}">

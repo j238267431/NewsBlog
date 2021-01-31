@@ -12,7 +12,9 @@
             @csrf
             <p>name:</p><br><input class="form-control" type="text" name="name" value="{{ old('name') }}">
             <p>feedback:</p><br><textarea class="form-control" name="feedback">{!! old('feedback') !!}</textarea><br>
+            <input type="file" name="image">
             <p><button class="btn btn-success" type="submit">send</button></p>
         </form>
     </div>
 @stop
+

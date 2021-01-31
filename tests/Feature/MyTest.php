@@ -15,13 +15,7 @@ class MyTest extends TestCase
      */
     public function testExample()
     {
-        $response = $this->get('/');
-
-        $response->assertStatus(200);
-    }
-    public function testCategories()
-    {
-        $response = $this->get('/components');
+        $response = $this->get('/categories');
 
         $response->assertStatus(200);
     }

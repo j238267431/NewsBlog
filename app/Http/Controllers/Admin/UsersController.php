@@ -17,7 +17,11 @@ class UsersController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(4);
+        $users = User::query()
+            ->paginate(4);
+
+
+
 //        $users->paginate(4);
 //        $users = User::orderBy('id', 'desc')->paginate(4);
         $categories = Categories::all();
@@ -83,8 +87,9 @@ class UsersController extends Controller
         $row->update([
             'is_admin' => $request->input('is_admin'),
         ]);
+//        $isAdmin = $request['isAdmin'];
 
-        return redirect()->route('users.index')->with('success', 'статус изменен');
+//        return redirect()->route('users.index')->with('success', 'статус изменен');
     }
 
     /**
@@ -95,6 +100,7 @@ class UsersController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete();
+
     }
 }

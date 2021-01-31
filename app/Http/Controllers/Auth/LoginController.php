@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::ACCOUNT;
+    protected $redirectTo = RouteServiceProvider::CATEGORIES;
 
     /**
      * Create a new controller instance.
@@ -42,5 +42,11 @@ class LoginController extends Controller
     protected function authenticated(Request $request, $user)
     {
 //        dd($user);
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+        return redirect()->route('categories');
     }
 }
