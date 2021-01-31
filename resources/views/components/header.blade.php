@@ -9,7 +9,6 @@
                 <nav class="classy-navbar justify-content-between" id="nikkiNav">
 
                     <!-- Nav brand -->
-{{--                    <a href="index.html" class="nav-brand"><img src="img/core-img/logo.png" alt=""></a>--}}
                     <a href="{{route('categories')}}"><h3>News Blog</h3></a>
                     <!-- Navbar Toggler -->
                     <div class="classy-navbar-toggler">
@@ -85,7 +84,6 @@
                             <div class="search-form" style="position: relative">
                                 <form action="#" method="get">
                                     <input id="search" type="search" name="search" class="form-control" value="{{old('search')}}" placeholder="Поиск новостей">
-{{--                                    <button type="submit"><i class="fa fa-search"></i></button>--}}
                                 </form>
                                     <div id="search_news_wrap"
                                          style="
@@ -99,10 +97,7 @@
                                          box-shadow: 0 0 10px rgba(0,0,0,0.5)" class="alert alert-light">
                                     </div>
                             </div>
-
-
                         </div>
-                        <!-- Nav End -->
                     </div>
                 </nav>
             </div>

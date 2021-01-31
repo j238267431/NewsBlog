@@ -34,13 +34,13 @@
 <!-- ##### Header Area Start ##### -->
 <x-header :categories="$categories"/>
 <!-- ##### Header Area End ##### -->
-{{--{{ dd($categories) }}--}}
+
 <!-- ##### Hero Area Start ##### -->
 
 
 @yield('content')
 <!-- ##### Hero Area End ##### -->
-<x-test></x-test>
+
 <!-- ##### Blog Content Area Start ##### -->
 
 <!-- ##### Blog Content Area End ##### -->

@@ -8,7 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-{{--    <title>{{ config('app.name', 'Laravel') }}</title>--}}
     <!-- Title -->
     <title>@if(!isset($title)){{'NewsBlog'}}@else{{$title}}@endif</title>
     <link rel="stylesheet" href="{{asset('css/switcher.css')}}">
@@ -32,13 +31,12 @@
 <!-- ##### Header Area Start ##### -->
 <x-adminHeader :categories="$categories"/>
 <!-- ##### Header Area End ##### -->
-{{--{{ dd($categories) }}--}}
 <!-- ##### Hero Area Start ##### -->
 
 
 @yield('content')
 <!-- ##### Hero Area End ##### -->
-<x-test></x-test>
+
 <!-- ##### Blog Content Area Start ##### -->
 
 <!-- ##### Blog Content Area End ##### -->
@@ -48,7 +46,6 @@
 <!-- ##### Instagram Area End ##### -->
 
 <!-- ##### Footer Area Start ##### -->
-{{--<x-footer></x-footer>--}}
 <!-- ##### Footer Area Start ##### -->
 
 <!-- ##### All Javascript Script ##### -->
